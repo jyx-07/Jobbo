@@ -1,4 +1,4 @@
-package congyun.toy.Jobbo
+package congyun.toy.jobbo
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

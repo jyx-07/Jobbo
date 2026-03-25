@@ -1,4 +1,4 @@
-package congyun.toy.Jobbo
+package congyun.toy.jobbo
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
