@@ -33,26 +33,20 @@ class ResumeEntity(
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-
     @ManyToOne(fetch = FetchType.LAZY)
     @field:JoinColumn(name = "user_id", nullable = false)
     var user: UserEntity,
-
     @field:Column(name = "title", nullable = false)
     var title: String,
-
     @field:Column(name = "summary", nullable = false)
     var summary: String,
-
     @field:Type(JsonBinaryType::class)
     @field:Column(columnDefinition = "jsonb")
     val skills: List<String> = emptyList(),
-
     @field:Type(JsonBinaryType::class)
     @field:Column(columnDefinition = "jsonb")
     val career: List<Career> = emptyList(),
-
     @field:Type(JsonBinaryType::class)
     @field:Column(columnDefinition = "jsonb")
-    val education: List<String> = emptyList()
+    val education: List<String> = emptyList(),
 )

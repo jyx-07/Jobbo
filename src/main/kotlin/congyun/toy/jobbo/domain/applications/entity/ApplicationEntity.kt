@@ -26,15 +26,12 @@ class ApplicationEntity(
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-
     @ManyToOne(fetch = FetchType.LAZY)
     @field:JoinColumn(name = "user_id", nullable = false)
     var userId: UserEntity,
-
     @ManyToOne(fetch = FetchType.LAZY)
     @field:JoinColumn(name = "job_posting_id", nullable = false)
     var jobPostingID: JobPostingEntity,
-
     @ManyToOne(fetch = FetchType.LAZY)
     @field:JoinColumn(name = "resume_id", nullable = false)
     var resumeID: ResumeEntity,

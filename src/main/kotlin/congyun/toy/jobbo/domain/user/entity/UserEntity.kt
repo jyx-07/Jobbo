@@ -1,6 +1,11 @@
 package congyun.toy.jobbo.domain.user.entity
 
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.Table
 
 /**
  * 사용자 정보를 나타내는 엔티티.
@@ -16,13 +21,10 @@ class UserEntity(
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-
     @field:Column(name = "name", nullable = false)
     val name: String,
-
     @field:Column(name = "email", nullable = false, unique = true)
     val email: String,
-
     @field:Column(name = "password", nullable = false)
     val password: String,
 )

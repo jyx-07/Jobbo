@@ -7,11 +7,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @SpringBootApplication
 class JobboApplication {
-
     @Bean
     fun passwordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder()
 }
 
 fun main(args: Array<String>) {
-	runApplication<JobboApplication>(*args)
+    runApplication<JobboApplication>(*args)
 }

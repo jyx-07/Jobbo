@@ -8,5 +8,5 @@ package congyun.toy.jobbo.domain.jobPosting.entity.presentation.data
  */
 enum class Status {
     OPEN,
-    CLOSED
+    CLOSED,
 }

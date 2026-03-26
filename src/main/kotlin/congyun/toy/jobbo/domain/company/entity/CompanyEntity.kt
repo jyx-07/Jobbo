@@ -21,13 +21,10 @@ class CompanyEntity(
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-
     @field:Column(name = "company_name", nullable = false)
     val companyName: String,
-
     @field:Column(name = "description", nullable = false)
     val description: String,
-
     @field:Column(name = "company_location", nullable = false)
-    val companyLocation: String
+    val companyLocation: String,
 )

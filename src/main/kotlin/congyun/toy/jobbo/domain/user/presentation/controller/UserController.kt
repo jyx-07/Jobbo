@@ -16,17 +16,20 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/user")
 class UserController(
     private val signUpService: SignUpService,
-    private val loginService: LoginService
+    private val loginService: LoginService,
 ) {
-
     @PostMapping("/signup")
-    fun signUp(@Valid @RequestBody request: SignUpRequest): ResponseEntity<Void> {
+    fun signUp(
+        @Valid @RequestBody request: SignUpRequest,
+    ): ResponseEntity<Void> {
         signUpService.execute(request)
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }
 
     @PostMapping("/login")
-    fun login(@Valid @RequestBody request: LoginRequest): ResponseEntity<Void> {
+    fun login(
+        @Valid @RequestBody request: LoginRequest,
+    ): ResponseEntity<Void> {
         loginService.execute(request)
         return ResponseEntity.ok().build()
     }

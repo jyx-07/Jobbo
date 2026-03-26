@@ -11,9 +11,8 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class SignUpServiceImpl(
     private val userRepository: UserRepository,
-    private val passwordEncoder: BCryptPasswordEncoder
+    private val passwordEncoder: BCryptPasswordEncoder,
 ) : SignUpService {
-
     @Transactional
     override fun execute(request: SignUpRequest) {
         if (userRepository.existsByEmail(request.email)) {
@@ -24,8 +23,8 @@ class SignUpServiceImpl(
             UserEntity(
                 name = request.name,
                 email = request.email,
-                password = passwordEncoder.encode(request.password)
-            )
+                password = passwordEncoder.encode(request.password),
+            ),
         )
     }
 }
