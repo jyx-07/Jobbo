@@ -33,29 +33,21 @@ class JobPostingEntity(
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-
     @field:Column(name = "title", nullable = false)
     val title: String,
-
     @field:Column(name = "description", nullable = false)
     val description: String,
-
     @field:Column(name = "position", nullable = false)
     val position: String,
-
     @field:Column(name = "location", nullable = false)
     val location: String,
-
     @field:Column(name = "salary", nullable = false)
     val salary: Long,
-
     @field:Column(name = "deadline", nullable = false)
     val deadline: Long,
-
     @field:Column(name = "status", nullable = false)
     @field:Enumerated(EnumType.STRING)
     val status: Status,
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false)
     val companyId: CompanyEntity,
