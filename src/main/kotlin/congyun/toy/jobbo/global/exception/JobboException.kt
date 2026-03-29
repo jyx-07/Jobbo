@@ -5,4 +5,3 @@ import java.lang.RuntimeException
 class JobboException(
     val error: ErrorCode,
 ) : RuntimeException(error.message)
-
