@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 class CustomUserDetailsService(
     private val userRepository: UserRepository,
 ) {
-    fun loadUserByUsername(userId:Long): CustomUserDetails {
+    fun loadUserByUsername(userId: Long): CustomUserDetails {
         return userRepository.findById(userId)
             .map { CustomUserDetails.from(it) }
             .orElseThrow { UserNotFoundException() }

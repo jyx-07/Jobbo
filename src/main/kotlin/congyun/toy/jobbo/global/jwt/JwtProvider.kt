@@ -44,7 +44,7 @@ class JwtProvider(
             accessToken = createToken(userId, ACCESS_TOKEN, accessExpiryDate),
             accessTokenExpiresAt = toLocalDate(accessExpiryDate),
             refreshToken = createToken(userId, REFRESH_TOKEN, refreshExpiryDate),
-            refreshTokenExpiresAt = toLocalDate(refreshExpiryDate)
+            refreshTokenExpiresAt = toLocalDate(refreshExpiryDate),
         )
     }
 
@@ -106,7 +106,11 @@ class JwtProvider(
 
     fun getUserId(claims: Claims): Long = claims.subject.toLong()
 
-    private fun createToken(userId: Long, type: String, expiryDate: Date): String {
+    private fun createToken(
+        userId: Long,
+        type: String,
+        expiryDate: Date,
+    ): String {
         return Jwts.builder()
             .subject(userId.toString())
             .claim(TOKEN_TYPE, type)
@@ -122,6 +126,5 @@ class JwtProvider(
             .toLocalDateTime()
     }
 
-    private fun calculateExpiryDate(validitySeconds: Long): Date =
-        Date(System.currentTimeMillis() + validitySeconds * 1000L)
+    private fun calculateExpiryDate(validitySeconds: Long): Date = Date(System.currentTimeMillis() + validitySeconds * 1000L)
 }

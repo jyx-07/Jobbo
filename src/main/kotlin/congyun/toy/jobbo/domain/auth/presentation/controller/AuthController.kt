@@ -22,20 +22,25 @@ class AuthController(
     private val loginService: LoginService,
     private val refreshTokenService: RefreshTokenService,
 ) {
-
     @PostMapping("/signup")
-    fun signUp(@RequestBody @Valid request: SignUpRequest): ResponseEntity<Void> {
+    fun signUp(
+        @RequestBody @Valid request: SignUpRequest,
+    ): ResponseEntity<Void> {
         signUpService.execute(request)
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody @Valid request: LoginRequest): ResponseEntity<TokenResponse> {
+    fun login(
+        @RequestBody @Valid request: LoginRequest,
+    ): ResponseEntity<TokenResponse> {
         return ResponseEntity.ok(loginService.execute(request))
     }
 
     @PostMapping("/refresh")
-    fun refresh(@RequestBody @Valid request: RefreshRequest): ResponseEntity<TokenResponse> {
+    fun refresh(
+        @RequestBody @Valid request: RefreshRequest,
+    ): ResponseEntity<TokenResponse> {
         return ResponseEntity.ok(refreshTokenService.execute(request.refreshToken))
     }
 }

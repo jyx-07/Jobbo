@@ -11,22 +11,26 @@ import org.springframework.stereotype.Component
 
 @Component
 class JwtAuthenticationEntryPoint(
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
 ) : AuthenticationEntryPoint {
-
     override fun commence(
         request: HttpServletRequest?,
         response: HttpServletResponse?,
-        authException: AuthenticationException?
+        authException: AuthenticationException?,
     ) {
         response?.let {
             it.status = HttpStatus.UNAUTHORIZED.value()
             it.contentType = "application/json"
             it.characterEncoding = "UTF-8"
         }
-        response?.let { objectMapper.writeValue(
-            it.writer, ErrorResponse(401,
-                "로그인이 되어 있지 않습니다.")
-        ) }
+        response?.let {
+            objectMapper.writeValue(
+                it.writer,
+                ErrorResponse(
+                    401,
+                    "로그인이 되어 있지 않습니다.",
+                ),
+            )
+        }
     }
 }

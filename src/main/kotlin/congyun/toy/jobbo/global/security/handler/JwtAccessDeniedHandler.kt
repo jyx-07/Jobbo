@@ -13,20 +13,24 @@ import org.springframework.stereotype.Component
 class JwtAccessDeniedHandler(
     private val objectMapper: ObjectMapper,
 ) : AccessDeniedHandler {
-
     override fun handle(
         request: HttpServletRequest?,
         response: HttpServletResponse?,
-        accessDeniedException: AccessDeniedException?
+        accessDeniedException: AccessDeniedException?,
     ) {
         response?.let {
             it.status = HttpStatus.FORBIDDEN.value()
             it.contentType = "application/json"
             it.characterEncoding = "UTF-8"
         }
-        response?.let { objectMapper.writeValue(
-            it.writer, ErrorResponse(403,
-                "접근 권한이 없습니다.")
-        ) }
+        response?.let {
+            objectMapper.writeValue(
+                it.writer,
+                ErrorResponse(
+                    403,
+                    "접근 권한이 없습니다.",
+                ),
+            )
+        }
     }
 }

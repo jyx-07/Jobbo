@@ -10,20 +10,15 @@ class CustomUserDetails private constructor(
     private val email: String?,
     private val password: String?,
 ) : UserDetails {
-
     companion object {
-        fun from(user: UserEntity): CustomUserDetails =
-            CustomUserDetails(user.id, user.email, user.password)
+        fun from(user: UserEntity): CustomUserDetails = CustomUserDetails(user.id, user.email, user.password)
 
-        fun fromToken(userId: Long): CustomUserDetails =
-            CustomUserDetails(userId, null, null)
+        fun fromToken(userId: Long): CustomUserDetails = CustomUserDetails(userId, null, null)
     }
 
-    override fun getAuthorities(): Collection<GrantedAuthority> =
-        listOf(SimpleGrantedAuthority("ROLE_USER"))
+    override fun getAuthorities(): Collection<GrantedAuthority> = listOf(SimpleGrantedAuthority("ROLE_USER"))
 
-    override fun getPassword(): String? =
-        password
+    override fun getPassword(): String? = password
 
     override fun getUsername(): String? = email
 
@@ -34,5 +29,4 @@ class CustomUserDetails private constructor(
     override fun isCredentialsNonExpired(): Boolean = true
 
     override fun isEnabled(): Boolean = true
-
 }

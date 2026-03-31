@@ -14,7 +14,6 @@ class SignUpServiceImpl(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder,
 ) : SignUpService {
-
     @Transactional
     override fun execute(request: SignUpRequest) {
         if (userRepository.existsByEmail(request.email)) {
@@ -25,7 +24,7 @@ class SignUpServiceImpl(
                 name = request.name,
                 email = request.email,
                 password = passwordEncoder.encode(request.password),
-            )
+            ),
         )
     }
 }

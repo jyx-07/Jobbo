@@ -15,7 +15,6 @@ class RefreshTokenServiceImpl(
     private val jwtProperties: JwtProperties,
     private val refreshTokenRepository: RefreshTokenRepository,
 ) : RefreshTokenService {
-
     override fun execute(refreshToken: String): TokenResponse {
         if (!jwtProvider.validateToken(refreshToken)) {
             throw InvalidTokenException()
@@ -26,8 +25,9 @@ class RefreshTokenServiceImpl(
             throw InvalidTokenException()
         }
 
-        val storedToken = refreshTokenRepository.findByToken(refreshToken)
-            ?: throw InvalidTokenException()
+        val storedToken =
+            refreshTokenRepository.findByToken(refreshToken)
+                ?: throw InvalidTokenException()
 
         val userId = jwtProvider.getUserId(claims)
         val newTokenResponse = jwtProvider.receiveToken(userId)
@@ -38,7 +38,7 @@ class RefreshTokenServiceImpl(
                 userId = userId.toString(),
                 token = newTokenResponse.refreshToken,
                 expiresIn = jwtProperties.refreshTokenExpiration,
-            )
+            ),
         )
 
         return newTokenResponse

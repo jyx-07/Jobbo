@@ -22,11 +22,11 @@ class LoginServiceImpl(
     private val jwtProperties: JwtProperties,
     private val refreshTokenRepository: RefreshTokenRepository,
 ) : LoginService {
-
     @Transactional(readOnly = true)
     override fun execute(request: LoginRequest): TokenResponse {
-        val user = userRepository.findByEmail(request.email)
-            ?: throw UserNotFoundException()
+        val user =
+            userRepository.findByEmail(request.email)
+                ?: throw UserNotFoundException()
 
         if (!passwordEncoder.matches(request.password, user.password)) {
             throw InvalidPasswordException()
@@ -39,7 +39,7 @@ class LoginServiceImpl(
                 userId = user.id.toString(),
                 token = tokenResponse.refreshToken,
                 expiresIn = jwtProperties.refreshTokenExpiration,
-            )
+            ),
         )
 
         return tokenResponse
