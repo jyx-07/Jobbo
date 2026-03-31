@@ -18,7 +18,7 @@ spring:
       ddl-auto: update
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: ${JWT_SECRET:jobbo-default-secret-key-for-test-1234}
   access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION:18000000}
   refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:1209600}
 
