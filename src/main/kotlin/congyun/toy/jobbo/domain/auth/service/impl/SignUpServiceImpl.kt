@@ -16,9 +16,7 @@ class SignUpServiceImpl(
 ) : SignUpService {
     @Transactional
     override fun execute(request: SignUpRequest) {
-        if (userRepository.existsByEmail(request.email)) {
-            throw EmailAlreadyExistsException()
-        }
+        if (userRepository.existsByEmail(request.email)) throw EmailAlreadyExistsException()
         userRepository.save(
             UserEntity(
                 name = request.name,

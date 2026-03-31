@@ -24,24 +24,17 @@ class LoginServiceImpl(
 ) : LoginService {
     @Transactional(readOnly = true)
     override fun execute(request: LoginRequest): TokenResponse {
-        val user =
-            userRepository.findByEmail(request.email)
-                ?: throw UserNotFoundException()
+        val user = userRepository.findByEmail(request.email) ?: throw UserNotFoundException()
+        if (!passwordEncoder.matches(request.password, user.password)) throw InvalidPasswordException()
 
-        if (!passwordEncoder.matches(request.password, user.password)) {
-            throw InvalidPasswordException()
+        return jwtProvider.receiveToken(user.id).also {
+            refreshTokenRepository.save(
+                RefreshToken(
+                    userId = user.id.toString(),
+                    token = it.refreshToken,
+                    expiresIn = jwtProperties.refreshTokenExpiration,
+                ),
+            )
         }
-
-        val tokenResponse = jwtProvider.receiveToken(user.id)
-
-        refreshTokenRepository.save(
-            RefreshToken(
-                userId = user.id.toString(),
-                token = tokenResponse.refreshToken,
-                expiresIn = jwtProperties.refreshTokenExpiration,
-            ),
-        )
-
-        return tokenResponse
     }
 }

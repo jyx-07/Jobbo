@@ -29,10 +29,9 @@ class JwtFilter(
         if (token != null) {
             try {
                 val claims = jwtProvider.getClaims(token)
-                if (!jwtProvider.isAccessToken(claims))
-                    {
-                        setErrorResponse(response, ErrorCode.INVALID_TOKEN)
-                    }
+                if (!jwtProvider.isAccessToken(claims)) {
+                    setErrorResponse(response, ErrorCode.INVALID_TOKEN)
+                }
                 val userId = jwtProvider.getUserId(claims)
                 val userDetails = CustomUserDetails.fromToken(userId)
                 val authentication =
@@ -54,7 +53,7 @@ class JwtFilter(
     private fun setErrorResponse(
         response: HttpServletResponse,
         error: ErrorCode,
-    )  {
+    ) {
         response.status = error.status
         response.contentType = ("application/json; charset=UTF-8")
         objectMapper.writeValue(

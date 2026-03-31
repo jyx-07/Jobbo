@@ -58,27 +58,17 @@ class JwtProvider(
         return createToken(userId, REFRESH_TOKEN, expiryDate)
     }
 
-    fun validateToken(token: String): Boolean {
-        return try {
-            Jwts.parser()
-                .verifyWith(secretKey)
-                .build()
-                .parseSignedClaims(token)
-            true
-        } catch (e: SecurityException) {
-            logger().error("잘못된 JWT 서명입니다.")
-            false
-        } catch (e: ExpiredJwtException) {
-            logger().error("만료된 JWT 토큰입니다.")
-            false
-        } catch (e: UnsupportedEncodingException) {
-            logger().error("지원하지 않는 JWT 토큰입니다.")
-            false
-        } catch (e: IllegalArgumentException) {
-            logger().error("JWT 토큰이 잘못되었습니다")
-            false
-        }
-    }
+    fun validateToken(token: String): Boolean =
+        runCatching {
+            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token)
+        }.onFailure { e ->
+            when (e) {
+                is SecurityException -> logger().error("잘못된 JWT 서명입니다.")
+                is ExpiredJwtException -> logger().error("만료된 JWT 토큰입니다.")
+                is UnsupportedEncodingException -> logger().error("지원하지 않는 JWT 토큰입니다.")
+                is IllegalArgumentException -> logger().error("JWT 토큰이 잘못되었습니다")
+            }
+        }.isSuccess
 
     fun getClaims(token: String): Claims {
         return Jwts.parser()

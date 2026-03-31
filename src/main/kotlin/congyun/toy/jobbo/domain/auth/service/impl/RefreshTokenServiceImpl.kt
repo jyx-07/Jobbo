@@ -16,31 +16,23 @@ class RefreshTokenServiceImpl(
     private val refreshTokenRepository: RefreshTokenRepository,
 ) : RefreshTokenService {
     override fun execute(refreshToken: String): TokenResponse {
-        if (!jwtProvider.validateToken(refreshToken)) {
-            throw InvalidTokenException()
-        }
+        if (!jwtProvider.validateToken(refreshToken)) throw InvalidTokenException()
 
         val claims = jwtProvider.getClaims(refreshToken)
-        if (!jwtProvider.isRefreshToken(claims)) {
-            throw InvalidTokenException()
-        }
+        if (!jwtProvider.isRefreshToken(claims)) throw InvalidTokenException()
 
-        val storedToken =
-            refreshTokenRepository.findByToken(refreshToken)
-                ?: throw InvalidTokenException()
-
+        val storedToken = refreshTokenRepository.findByToken(refreshToken) ?: throw InvalidTokenException()
         val userId = jwtProvider.getUserId(claims)
-        val newTokenResponse = jwtProvider.receiveToken(userId)
 
-        refreshTokenRepository.delete(storedToken)
-        refreshTokenRepository.save(
-            RefreshToken(
-                userId = userId.toString(),
-                token = newTokenResponse.refreshToken,
-                expiresIn = jwtProperties.refreshTokenExpiration,
-            ),
-        )
-
-        return newTokenResponse
+        return jwtProvider.receiveToken(userId).also {
+            refreshTokenRepository.delete(storedToken)
+            refreshTokenRepository.save(
+                RefreshToken(
+                    userId = userId.toString(),
+                    token = it.refreshToken,
+                    expiresIn = jwtProperties.refreshTokenExpiration,
+                ),
+            )
+        }
     }
 }
