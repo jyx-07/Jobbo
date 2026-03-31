@@ -1,15 +1,14 @@
 package congyun.toy.jobbo
 
+import congyun.toy.jobbo.global.jwt.JwtProperties
+import congyun.toy.jobbo.global.security.properties.CorsProperties
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
-import org.springframework.context.annotation.Bean
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @SpringBootApplication
-class JobboApplication {
-    @Bean
-    fun passwordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder()
-}
+@EnableConfigurationProperties(JwtProperties::class, CorsProperties::class)
+class JobboApplication
 
 fun main(args: Array<String>) {
     runApplication<JobboApplication>(*args)
