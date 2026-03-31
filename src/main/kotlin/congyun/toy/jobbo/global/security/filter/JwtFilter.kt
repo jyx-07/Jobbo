@@ -31,6 +31,7 @@ class JwtFilter(
                 val claims = jwtProvider.getClaims(token)
                 if (!jwtProvider.isAccessToken(claims)) {
                     setErrorResponse(response, ErrorCode.INVALID_TOKEN)
+                    return
                 }
                 val userId = jwtProvider.getUserId(claims)
                 val userDetails = CustomUserDetails.fromToken(userId)
