@@ -1,4 +1,4 @@
-package congyun.toy.jobbo.domain.user.presentation.data.request
+package congyun.toy.jobbo.domain.auth.presentation.data.request
 
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
