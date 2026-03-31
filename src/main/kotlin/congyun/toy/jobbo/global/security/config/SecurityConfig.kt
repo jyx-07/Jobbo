@@ -1,6 +1,5 @@
 package congyun.toy.jobbo.global.security.config
 
-import co.elastic.clients.elasticsearch.watcher.EmailAttachmentBuilders.http
 import congyun.toy.jobbo.global.security.filter.JwtFilter
 import congyun.toy.jobbo.global.security.handler.JwtAccessDeniedHandler
 import congyun.toy.jobbo.global.security.handler.JwtAuthenticationEntryPoint

@@ -5,6 +5,7 @@ import congyun.toy.jobbo.global.config.logger
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.UnsupportedJwtException
 import io.jsonwebtoken.security.Keys
 import jakarta.annotation.PostConstruct
 import jakarta.servlet.http.HttpServletRequest
@@ -14,6 +15,7 @@ import java.io.UnsupportedEncodingException
 import java.nio.charset.StandardCharsets
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.Date
 import javax.crypto.SecretKey
 
@@ -65,7 +67,7 @@ class JwtProvider(
             when (e) {
                 is SecurityException -> logger().error("잘못된 JWT 서명입니다.")
                 is ExpiredJwtException -> logger().error("만료된 JWT 토큰입니다.")
-                is UnsupportedEncodingException -> logger().error("지원하지 않는 JWT 토큰입니다.")
+                is UnsupportedJwtException -> logger().error("지원하지 않는 JWT 토큰입니다.")
                 is IllegalArgumentException -> logger().error("JWT 토큰이 잘못되었습니다")
             }
         }.isSuccess
@@ -112,7 +114,7 @@ class JwtProvider(
 
     private fun toLocalDate(date: Date): LocalDateTime {
         return date.toInstant()
-            .atZone(ZoneId.systemDefault())
+            .atZone(ZoneOffset.UTC)
             .toLocalDateTime()
     }
 
